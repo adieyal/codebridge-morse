@@ -4,6 +4,7 @@
         <script src="morse.js"></script>
         <script src="sound.js"></script>
         <style>
+            @font-face { font-family: Kollektif; src: url('Kollektif.ttf'); }
 			button {
 				margin-bottom: 15px;
 			}
@@ -22,7 +23,7 @@
 
             .letter.s {
                 width: 30px;
-                background-color: blue;
+                background-color: black;
                 border-radius: 50%;
             }
 
@@ -32,7 +33,7 @@
 
             .letter.l {
                 width: 90px;
-                background-color: pink;
+                background-color: #fcae16;
             }
 
             #transcript {
@@ -40,19 +41,33 @@
             }
 			
 			body {
-				font-family: Verdana, sans;
+				font-family: Kollektif, Verdana, sans;
 			} 
+
+            .logo {
+                width: 50%;
+            }
+
+            #frame {
+                margin-left: 6px;
+                color: #232323;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
         </style>
     </head>
     <body>
-		<h1>Speech to morse code converter</h1>
-		<p>
-			Push start and start talking.
-		</p>
-		<button id="start">Start</button>
-		<br/>
-        <div id="content"></div>
-        <div id="transcript"></div>
+        <img class="logo" src="codebridge.png"/>
+        <div id="frame">
+            <h1>Speech to morse code converter</h1> 
+            <p> Push start and start talking.</p>
+            <button id="start">Start</button>
+            <br/>
+            <div id="content"></div>
+            <p id="transcript"></p>
+        </div>
         <script>
 
         function write_morse(contentbox, text) {
