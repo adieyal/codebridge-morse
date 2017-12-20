@@ -36,7 +36,12 @@
                                     .enter()
                                     .append("div")
                                         .attr("class", function(letter) {
-                                            return letter;
+
+                                            if (letter == ".")
+                                                return "s"
+                                            else if (letter == "-")
+                                                return "l"
+                                            return "space"
                                         })
                                     .classed("letter", true)
                             }

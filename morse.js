@@ -1,24 +1,11 @@
-var morse_lookup = {
-    a : "sl", b : "lsss", c : "lsls", d : "lss",
-    e : "s", f : "ssls", g : "lls", h : "ssss",
-    i : "ss", j : "slll", k : "lsl", l : "slss",
-    m : "ll", n : "ls", o : "lll", p : "slls",
-    q : "llsl", r : "sls", s : "sss", t : "l",
-    u : "ssl", v : "sssl", w : "sll", x : "lssl",
-    y : "lsll", z : "llss",
-    1 : "sllll", 2: "sslll", 3: "sssll", 4: "ssssl",
-    5 : "sssss", 6: "lssss", 7: "llsss", 8: "lllss",
-    9:  "lllls", 0: "lllll",
-    " ": "space"
-}
 var morse = {
     text_to_morse : function(text) {
-        text = text.toLowerCase();
         var code = []
         for (idx in text) {
-            var letter = text[idx]
-            if (morse_lookup[letter]) {
-                code.push(morse_lookup[letter])
+            var letter = text[idx].toUpperCase();
+            var lookup = MorseNode.prototype.MORSE[letter]
+            if (lookup) {
+                code.push(lookup)
             }
         }
         return code
