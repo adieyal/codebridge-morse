@@ -1,0 +1,146 @@
+<html>
+    <head>
+        <script src="d3.v4.min.js"></script>
+        <script src="morse.js"></script>
+        <script src="sound.js"></script>
+        <style>
+			button {
+				margin-bottom: 15px;
+			}
+
+            .morseword {
+                float: left;
+                margin-right: 90px;
+                margin-bottom: 15px;
+            }
+
+            .letter {
+                margin-right: 30px;
+                float: left;
+                height: 30px;
+            }
+
+            .letter.s {
+                width: 30px;
+                background-color: blue;
+                border-radius: 50%;
+            }
+
+            .letter.space {
+                width: 210;
+            }
+
+            .letter.l {
+                width: 90px;
+                background-color: pink;
+            }
+
+            #transcript {
+                clear: left;
+            }
+			
+			body {
+				font-family: Verdana, sans;
+			} 
+        </style>
+    </head>
+    <body>
+		<h1>Speech to morse code converter</h1>
+		<p>
+			Push start and start talking.
+		</p>
+		<button id="start">Start</button>
+		<br/>
+        <div id="content"></div>
+        <div id="transcript"></div>
+        <script>
+
+        function write_morse(contentbox, text) {
+            morse_code = morse.text_to_morse(text)
+            console.log("Morse code: " + morse_code)
+            contentbox.selectAll(".morseword")
+                .data(morse_code)
+                .enter()
+                .append("div")
+                    .classed("morseword", true)
+                    .each(function(word) {
+                            if (word == "space") {
+                                d3.select(this)
+                                    .append("div")
+                                    .classed("letter", true)
+                                    .classed("space", true)
+                            } else {
+                                d3.select(this).selectAll(".letter")
+                                    .data(word.split(""))
+                                    .enter()
+                                    .append("div")
+                                        .attr("class", function(letter) {
+                                            return letter;
+                                        })
+                                    .classed("letter", true)
+                            }
+                    })
+        }
+
+        try {
+
+			var contentbox = d3.select("#content");
+			var transcript_box = d3.select("#transcript");
+			var context = new (window.AudioContext || window.webkitAudioContext)();
+			var morseNode = new MorseNode(context);
+            var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            var recognition = new SpeechRecognition();
+            
+            recognition.onstart = function() { 
+                  console.log('Voice recognition activated. Try speaking into the microphone.');
+            }
+
+            recognition.onspeechend = function() {
+                  console.log('You were quiet for a while so voice recognition turned itself off.');
+            }
+
+            recognition.onerror = function(event) {
+                if(event.error == 'no-speech') {
+                    console.log('No speech was detected. Try again.');  
+                };
+            }
+
+            recognition.onresult = function(event) {
+
+                // event is a SpeechRecognitionEvent object.
+                // It holds all the lines we have captured so far. 
+                // We only need the current one.
+                var current = event.resultIndex;
+
+                // Get a transcript of what was said.
+                var transcript = event.results[current][0].transcript;
+                console.log(transcript)
+
+                write_morse(contentbox, transcript)
+                transcript_box.text("Transcription: " + transcript)
+
+				var time = context.currentTime;
+				morseNode.playString(time, transcript)
+
+				recognition.stop()
+				d3.select("button#start").text("Start")
+            
+            }
+
+			d3.select("button#start").on("click", function() {
+				d3.select(this).text("recognising...")
+				console.log("Starting recognition...")
+				contentbox.selectAll("div").remove()
+				transcript_box.text("")
+				recognition.start();
+			})
+        }
+        catch(e) {
+            console.error(e);
+            $('.no-browser-support').show();
+            $('.app').hide();
+        }
+
+        </script>
+    </body>
+</html>
