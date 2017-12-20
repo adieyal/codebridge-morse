@@ -1,0 +1,55 @@
+
+@font-face { font-family: Kollektif; src: url('Kollektif.ttf'); }
+button {
+    margin-bottom: 15px;
+}
+
+.morseword {
+    float: left;
+    margin-right: 2em;
+    margin-bottom: 15px;
+}
+
+.letter {
+    margin-right: 0.5em;
+    float: left;
+    height: 1em;
+}
+
+.letter.s {
+    width: 1em;
+    background-color: black;
+    border-radius: 50%;
+}
+
+.letter.space {
+    width: 3em;
+}
+
+.letter.l {
+    width: 3em;
+    background-color: #fcae16;
+}
+
+#transcript {
+    clear: left;
+}
+
+body {
+    font-family: Kollektif, Verdana, sans;
+} 
+
+.logo {
+    width: 50%;
+}
+
+#frame {
+    margin-left: 6px;
+    color: #232323;
+    max-width: 1024px;
+}
+
+.subtitle {
+    font-size: 2em;
+    margin-top: -2px;
+}

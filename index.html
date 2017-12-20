@@ -3,61 +3,7 @@
         <script src="d3.v4.min.js"></script>
         <script src="morse.js"></script>
         <script src="sound.js"></script>
-        <style>
-            @font-face { font-family: Kollektif; src: url('Kollektif.ttf'); }
-			button {
-				margin-bottom: 15px;
-			}
-
-            .morseword {
-                float: left;
-                margin-right: 90px;
-                margin-bottom: 15px;
-            }
-
-            .letter {
-                margin-right: 30px;
-                float: left;
-                height: 30px;
-            }
-
-            .letter.s {
-                width: 30px;
-                background-color: black;
-                border-radius: 50%;
-            }
-
-            .letter.space {
-                width: 210;
-            }
-
-            .letter.l {
-                width: 90px;
-                background-color: #fcae16;
-            }
-
-            #transcript {
-                clear: left;
-            }
-			
-			body {
-				font-family: Kollektif, Verdana, sans;
-			} 
-
-            .logo {
-                width: 50%;
-            }
-
-            #frame {
-                margin-left: 6px;
-                color: #232323;
-            }
-
-            .subtitle {
-                font-size: 25px;
-                margin-top: -2px;
-            }
-        </style>
+        <link type="text/css" href="stylesheet.css" media="all" rel="stylesheet">
     </head>
     <body>
         <img class="logo" src="codebridge.png"/>
@@ -73,7 +19,6 @@
 
         function write_morse(contentbox, text) {
             morse_code = morse.text_to_morse(text)
-            console.log("Morse code: " + morse_code)
             contentbox.selectAll(".morseword")
                 .data(morse_code)
                 .enter()
